@@ -84,8 +84,6 @@ FROM restaurants_staging;
 -- Findings:
 -- Known_for1 contained 642 'Nan' values.
 -- Known_for2 contained 3,719 'Nan' values.
--- These values were later converted to NULL
--- for consistency.
 
 -- STEP 3: Review Category Distribution
 
@@ -143,16 +141,6 @@ FROM restaurants_staging;
 -- STEP 5: Check for Duplicate Restaurants
 
 -- Identify Duplicates Using Cleaned Keys
-
-SELECT 
-	TRIM(LOWER(Restaurant_name)) AS clean_name,
-    TRIM(LOWER(Locality))        AS clean_locality,
-    COUNT(*)                     AS dup_count,
-    GROUP_CONCAT(id ORDER BY id) AS all_ids
-FROM restaurants_staging
-GROUP BY clean_name, clean_locality
-HAVING COUNT(*) > 1
-ORDER BY dup_count DESC;
 
 SELECT 
 	TRIM(LOWER(Restaurant_name)) AS clean_name,
